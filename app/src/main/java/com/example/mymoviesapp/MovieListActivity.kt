@@ -23,27 +23,27 @@ class MovieListActivity : AppCompatActivity() {
         binding = ActivityMovieListBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        setupAdapter()
+        setupAdapter() //chama o adapter
     }
 
     private fun setupAdapter() {
         binding.movieRecyclerView.apply {
-            layoutManager = LinearLayoutManager(
+            layoutManager = LinearLayoutManager( //lista de cima pra baixo
                 this@MovieListActivity
             )
-            adapter = MoviesAdapter(moviesList, ::goToDetailsPage )
+            adapter = MoviesAdapter(moviesList, ::goToDetailsPage ) //chama a lista inicializada e a funcao do click
         }
     }
 
-    private fun goToDetailsPage(id: Long) {
+    private fun goToDetailsPage(movie: Movie) {
         val intent = Intent(this, DetailsActivity::class.java).apply {
-            putExtra(MOVIE_ID, id)
+            putExtra(MOVIE, movie) //insere o argumento na proxima tela
         }
-        startActivity(intent)
+        startActivity(intent) //inicia a proxuma activity
     }
 
     companion object {
-        const val MOVIE_ID = "movie_id"
+        const val MOVIE = "movie" //variavel estatica
     }
 
 }

@@ -1,9 +1,8 @@
 package com.example.mymoviesapp
 
-import android.graphics.Movie
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.mymoviesapp.MovieListActivity.Companion.MOVIE_ID
+import com.example.mymoviesapp.MovieListActivity.Companion.MOVIE
 import com.example.mymoviesapp.databinding.ActivityDetailsBinding
 
 class DetailsActivity : AppCompatActivity() {
@@ -14,7 +13,9 @@ class DetailsActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         intent.extras?.let {
-            binding.titleTextView.text = it[MOVIE_ID].toString()
+            val movie = it[MOVIE] as Movie
+            binding.titleTextView.text = movie.title
+            binding.overviewTextView.text = movie.description
         }
     }
 }
