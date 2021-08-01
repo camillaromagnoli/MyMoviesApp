@@ -1,16 +1,17 @@
 package com.example.mymoviesapp.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mymoviesapp.models.Movie
-import com.example.mymoviesapp.models.MovieRepository
+import com.example.mymoviesapp.data.MovieRepository
+import com.example.mymoviesapp.domain.Movie
 
-class MovieViewModel: ViewModel() {
+class MovieViewModel @ViewModelInject constructor(private val movieRepository: MovieRepository): ViewModel() {
     private val movies = MutableLiveData<List<Movie>>()
     fun getMovies() = movies
 
     fun getMovieData() {
-        MovieRepository.getPopular { movies.postValue(it) }
+        movieRepository.getPopularMovies{ movies.postValue(it) }
     }
 
 }

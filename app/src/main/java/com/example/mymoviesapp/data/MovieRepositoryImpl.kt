@@ -1,24 +1,20 @@
-package com.example.mymoviesapp.models
+package com.example.mymoviesapp.data
 
+import com.example.mymoviesapp.domain.Movie
+import com.example.mymoviesapp.domain.MovieList
+import com.example.mymoviesapp.models.MovieApi
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-object MovieRepository {
-    private val retrofit: Retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl("https://api.themoviedb.org/")
-        .build()
-
-    private val moviesApi: TheMoviesApi = retrofit.create(TheMoviesApi::class.java)
-
-    fun getPopular(callback: (List<Movie>) -> Unit) {
+class MovieRepositoryImpl
+@Inject constructor(private val movieApi: MovieApi): MovieRepository {
+   override fun getPopularMovies(callback: (List<Movie>) -> Unit) {
         CoroutineScope(GlobalScope.coroutineContext).launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) {
-                val callApi = moviesApi.getPopularMovies()
+                val callApi = movieApi.getPopularMovies()
                 callApi.enqueue(object : Callback<MovieList> {
                     override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
                         callback(response.body()?.results ?: mutableListOf())

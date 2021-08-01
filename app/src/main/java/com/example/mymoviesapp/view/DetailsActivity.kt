@@ -2,11 +2,12 @@ package com.example.mymoviesapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.bumptech.glide.Glide
 import com.example.mymoviesapp.databinding.ActivityDetailsBinding
 import com.example.mymoviesapp.extensions.loadImage
-import com.example.mymoviesapp.models.Movie
+import com.example.mymoviesapp.domain.Movie
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
 

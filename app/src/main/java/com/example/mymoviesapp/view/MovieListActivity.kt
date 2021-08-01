@@ -2,16 +2,18 @@ package com.example.mymoviesapp.view
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.example.mymoviesapp.databinding.ActivityMovieListBinding
-import com.example.mymoviesapp.models.Movie
+import com.example.mymoviesapp.domain.Movie
 import com.example.mymoviesapp.view.DetailsActivity.Companion.MOVIE
 import com.example.mymoviesapp.viewmodel.MovieViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMovieListBinding
-    private val movieViewModel = MovieViewModel()
+    private val movieListViewModel: MovieViewModel by viewModels()
 
     private val adapterMovies by lazy { MoviesAdapter(::goToDetailsPage) }
 
@@ -21,7 +23,7 @@ class MovieListActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupAdapter()
         setupObservers()
-        movieViewModel.getMovieData()
+        movieListViewModel.getMovieData()
     }
 
     private fun setupAdapter() {
@@ -29,7 +31,7 @@ class MovieListActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        movieViewModel.getMovies().observe(this, {
+        movieListViewModel.getMovies().observe(this, {
             adapterMovies.addMovies(it)
         })
     }

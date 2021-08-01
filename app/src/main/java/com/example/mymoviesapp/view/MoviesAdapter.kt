@@ -3,11 +3,9 @@ package com.example.mymoviesapp.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.mymoviesapp.databinding.ItemMovieBinding
 import com.example.mymoviesapp.extensions.loadImage
-import com.example.mymoviesapp.models.Movie
-import java.time.format.DateTimeFormatter
+import com.example.mymoviesapp.domain.Movie
 
 class MoviesAdapter(
     private val listener: (movie: Movie) -> Unit
