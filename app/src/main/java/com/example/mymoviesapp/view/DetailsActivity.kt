@@ -15,13 +15,13 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         intent.extras?.let {
             val movie = it[MOVIE] as Movie
             binding.contentInfoInclude.titleTextView.text = movie.title
             binding.contentInfoInclude.originalTitleTextView.text = movie.originalTitle
             binding.contentInfoInclude.overviewTextView.text = movie.overview
-            binding.contentInfoInclude.releaseDateTextView.text = movie.releaseDate
+            binding.contentInfoInclude.releaseDateTextView.text =  movie.releaseDate
             binding.contentInfoInclude.voteAverageTextView.text = movie.voteAverage.toString()
             binding.contentInfoInclude.voteAverageRatingBar.rating = (movie.voteAverage ?: 0f) / 2
             binding.backdropImageView.loadImage(binding.root, "$BACKDROP_BASE_URL${movie.backdropPath}")
