@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymoviesapp.databinding.ItemMovieBinding
 import com.example.mymoviesapp.extensions.loadImage
-import com.example.mymoviesapp.domain.Movie
+import com.example.mymoviesapp.domain.movie.entity.Movie
 
 class MoviesAdapter(
     private val listener: (movie: Movie) -> Unit

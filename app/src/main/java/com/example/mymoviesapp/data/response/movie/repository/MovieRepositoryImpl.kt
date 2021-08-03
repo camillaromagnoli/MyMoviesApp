@@ -1,8 +1,9 @@
-package com.example.mymoviesapp.data
+package com.example.mymoviesapp.data.response.movie.repository
 
-import com.example.mymoviesapp.domain.Movie
-import com.example.mymoviesapp.domain.MovieList
-import com.example.mymoviesapp.models.MovieApi
+import com.example.mymoviesapp.domain.movie.entity.Movie
+import com.example.mymoviesapp.domain.movie.entity.MovieList
+import com.example.mymoviesapp.data.core.MovieApi
+import com.example.mymoviesapp.domain.movie.repository.MovieRepository
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback

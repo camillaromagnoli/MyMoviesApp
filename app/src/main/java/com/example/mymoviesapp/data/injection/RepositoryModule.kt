@@ -1,6 +1,8 @@
-package com.example.mymoviesapp.data
+package com.example.mymoviesapp.data.injection
 
-import com.example.mymoviesapp.models.MovieApi
+import com.example.mymoviesapp.domain.movie.repository.MovieRepository
+import com.example.mymoviesapp.data.response.movie.repository.MovieRepositoryImpl
+import com.example.mymoviesapp.data.core.MovieApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
