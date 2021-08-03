@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mymoviesapp.databinding.ActivityMovieListBinding
-import com.example.mymoviesapp.domain.Movie
+import com.example.mymoviesapp.domain.movie.entity.Movie
 import com.example.mymoviesapp.view.DetailsActivity.Companion.MOVIE
 import com.example.mymoviesapp.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
