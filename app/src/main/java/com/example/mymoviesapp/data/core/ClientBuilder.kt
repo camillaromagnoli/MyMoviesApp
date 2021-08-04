@@ -10,6 +10,7 @@ class ClientBuilder {
         ): S = createRetrofitClient().create(serviceClass)
 
         private const val BASE_URL = "https://api.themoviedb.org/"
+        const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/w500"
 
         private fun createRetrofitClient(): Retrofit {
             return Retrofit.Builder()

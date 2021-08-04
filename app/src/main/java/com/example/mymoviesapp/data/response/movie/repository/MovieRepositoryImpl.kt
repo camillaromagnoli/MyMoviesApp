@@ -26,4 +26,34 @@ class MovieRepositoryImpl
             }
         }
     }
+
+    override fun getTopRatedMovies(callback: (List<Movie>) -> Unit) {
+        CoroutineScope(GlobalScope.coroutineContext).launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                val callApi = movieApi.getTopRatedMovies()
+                callApi.enqueue(object : Callback<MovieList> {
+                    override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
+                        callback(response.body()?.results ?: mutableListOf())
+                    }
+                    override fun onFailure(call: Call<MovieList>, t: Throwable) {
+                    }
+                })
+            }
+        }
+    }
+
+    override fun getUpcomingMovies(callback: (List<Movie>) -> Unit) {
+        CoroutineScope(GlobalScope.coroutineContext).launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                val callApi = movieApi.getUpcomingMovies()
+                callApi.enqueue(object : Callback<MovieList> {
+                    override fun onResponse(call: Call<MovieList>, response: Response<MovieList>) {
+                        callback(response.body()?.results ?: mutableListOf())
+                    }
+                    override fun onFailure(call: Call<MovieList>, t: Throwable) {
+                    }
+                })
+            }
+        }
+    }
 }

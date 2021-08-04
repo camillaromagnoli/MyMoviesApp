@@ -1,8 +1,9 @@
-package com.example.mymoviesapp.view
+package com.example.mymoviesapp.features.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mymoviesapp.data.core.ClientBuilder.Companion.BASE_POSTER_URL
 import com.example.mymoviesapp.databinding.ItemMovieBinding
 import com.example.mymoviesapp.extensions.loadImage
 import com.example.mymoviesapp.domain.movie.entity.Movie
@@ -33,6 +34,7 @@ class MoviesAdapter(
     override fun getItemCount(): Int = items.size
 
     fun addMovies(list: List<Movie>?) {
+        items.clear()
         items.addAll(list.orEmpty())
         notifyDataSetChanged()
     }
@@ -55,7 +57,4 @@ class MoviesAdapter(
         }
     }
 
-    companion object {
-        private const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/w500"
-    }
 }

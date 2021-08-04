@@ -8,8 +8,9 @@ import kotlinx.parcelize.Parcelize
 data class Movie(
     val title: String?,
     val id: Int?,
-    @SerializedName("poster_path") val posterPath: String?,
     val overview: String?,
+    @SerializedName("genre_ids")val genreIds: List<Int>,
+    @SerializedName("poster_path") val posterPath: String?,
     @SerializedName("original_title") val originalTitle: String?,
     @SerializedName("release_date") val releaseDate: String?,
     @SerializedName("vote_average") val voteAverage: Float?,
