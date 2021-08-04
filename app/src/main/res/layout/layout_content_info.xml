@@ -6,90 +6,133 @@
     android:layout_height="match_parent"
     android:clipToPadding="false">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
-        android:elevation="@dimen/cardview_default_elevation"
-        app:cardCornerRadius="@dimen/card_corner_radius"
-        app:cardBackgroundColor="@color/color_primary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_small"
-        >
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/titleTextView"
-            style="@style/TextAppearance.Title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@tools:sample/lorem" />
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/originalTitleTextView"
-            style="@style/TextAppearance.Subtitle"
-            android:layout_width="0dp"
-            android:layout_marginTop="@dimen/margin_small"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/content_card_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="@dimen/cardview_default_elevation"
+            app:cardBackgroundColor="@color/color_primary"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardUseCompatPadding="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView"
-            tools:text="@tools:sample/lorem" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/releaseDateTextView"
-            style="@style/TextAppearance.Caption.Small"
-            android:layout_marginTop="@dimen/margin_xxsmall"
-            android:textColor="@color/color_gray"
-            android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small">
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    android:id="@+id/vote_average_rating_bar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_xxsmall"
+                    android:theme="@style/RatingBar"
+                    app:layout_constraintBottom_toBottomOf="@id/vote_average_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/vote_average_text_view"
+                    app:layout_constraintTop_toTopOf="@id/vote_average_text_view"
+                    tools:rating="2" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/original_title_text_view"
+                    style="@style/TextAppearance.Subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title_text_view"
+                    tools:text="@tools:sample/lorem" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/release_date_text_view"
+                    style="@style/TextAppearance.Caption.Small"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xxsmall"
+                    android:textColor="@color/color_gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/original_title_text_view"
+                    tools:text="@tools:sample/lorem" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/vote_average_text_view"
+                    style="@style/TextAppearance.Title.G"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/margin_small"
+                    android:textColor="@color/color_yellow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/release_date_text_view"
+                    tools:text="9.1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/title_text_view"
+                    style="@style/TextAppearance.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@tools:sample/lorem" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/overview_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vote_average_text_view"
+                    tools:text="@tools:sample/lorem/random" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cast_card_view"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="@dimen/cardview_default_elevation"
+            app:cardBackgroundColor="@color/color_primary"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardUseCompatPadding="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/originalTitleTextView"
-            tools:text="@tools:sample/lorem" />
+            app:layout_constraintTop_toBottomOf="@id/content_card_view">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/voteAverageTextView"
-            style="@style/TextAppearance.Title.G"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/margin_small"
-            android:textColor="@color/color_yellow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/releaseDateTextView"
-            tools:text="9.1" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small">
 
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/voteAverageRatingBar"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:theme="@style/RatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_small"
-            app:layout_constraintBottom_toBottomOf="@id/voteAverageTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginStart="@dimen/margin_xxsmall"
-            app:layout_constraintStart_toEndOf="@id/voteAverageTextView"
-            app:layout_constraintTop_toTopOf="@id/voteAverageTextView"
-            tools:rating="2" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cast_title_text_view"
+                    style="@style/TextAppearance.Title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cast"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/overviewTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/voteAverageTextView"
-            tools:text="@tools:sample/lorem/random" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cast_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/cast_title_text_view"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_cast" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
 </androidx.core.widget.NestedScrollView>

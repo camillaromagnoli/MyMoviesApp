@@ -3,7 +3,9 @@ package com.example.mymoviesapp.data.injection
 import com.example.mymoviesapp.domain.movie.repository.MovieRepository
 import com.example.mymoviesapp.data.response.movie.repository.MovieRepositoryImpl
 import com.example.mymoviesapp.data.core.MovieApi
+import com.example.mymoviesapp.data.response.credit.repository.CreditRepositoryImpl
 import com.example.mymoviesapp.data.response.genre.repository.GenreRepositoryImpl
+import com.example.mymoviesapp.domain.credits.repository.CreditRepository
 import com.example.mymoviesapp.domain.genre.repository.GenreRepository
 import dagger.Module
 import dagger.Provides
@@ -25,5 +27,11 @@ object RepositoryModule {
     @Provides
     fun provideGenreRepository(movieApi: MovieApi): GenreRepository {
         return GenreRepositoryImpl(movieApi)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCreditRepository(movieApi: MovieApi): CreditRepository {
+        return CreditRepositoryImpl(movieApi)
     }
 }

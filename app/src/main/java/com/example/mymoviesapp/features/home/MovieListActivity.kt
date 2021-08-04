@@ -28,7 +28,7 @@ class MovieListActivity : AppCompatActivity(), BottomSheetEvents {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupAdapter()
+        setupAdapters()
         setupObservers()
         setupListeners()
         movieListViewModel.getMovieData()
@@ -47,7 +47,7 @@ class MovieListActivity : AppCompatActivity(), BottomSheetEvents {
         }
     }
 
-    private fun setupAdapter() {
+    private fun setupAdapters() {
         binding.popularMovieRecyclerView.adapter = popularMoviesAdapter
         binding.upcomingMovieRecyclerView.apply {
             adapter = upcomingMoviesAdapter
@@ -82,28 +82,9 @@ class MovieListActivity : AppCompatActivity(), BottomSheetEvents {
 
     override fun onBottomSheetClose(args: Map<String, Any>) {
         args[ID]?.let {
-            popularMoviesAdapter.addMovies(
-                movieListViewModel.filterByGenre(
-                    it as Int,
-                    movieListViewModel.getPopularMovies().value
-                )
-            )
-            topRatedMoviesAdapter.addMovies(
-                movieListViewModel.filterByGenre(
-                    it,
-                    movieListViewModel.getTopRatedMovies().value
-                )
-            )
-            upcomingMoviesAdapter.addMovies(
-                movieListViewModel.filterByGenre(
-                    it,
-                    movieListViewModel.getUpcomingMovies().value
-                )
-            )
+            movieListViewModel.filterByGenre(it as Int)
         } ?: run {
-                popularMoviesAdapter.addMovies(movieListViewModel.getPopularMovies().value)
-                topRatedMoviesAdapter.addMovies(movieListViewModel.getTopRatedMovies().value)
-                upcomingMoviesAdapter.addMovies(movieListViewModel.getUpcomingMovies().value)
+            movieListViewModel.resetFilters()
         }
     }
 }

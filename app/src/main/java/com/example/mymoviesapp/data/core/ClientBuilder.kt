@@ -11,6 +11,7 @@ class ClientBuilder {
 
         private const val BASE_URL = "https://api.themoviedb.org/"
         const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/w500"
+        const val BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/original/"
 
         private fun createRetrofitClient(): Retrofit {
             return Retrofit.Builder()
