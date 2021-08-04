@@ -6,4 +6,10 @@
     <string name="popular_movies">Popular Movies</string>
     <string name="top_rated_movies">Top Rated Movies</string>
     <string name="cast">Cast</string>
+    <string name="ok">OK</string>
+    <string name="try_again">Try again</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="network_error">Unable to connect. Please check your network connection and try again.</string>
+    <string name="generic_error_message">An error occurred. Please try again later.</string>
+    <string name="service_unavailable">Service unavailable.</string>
 </resources>

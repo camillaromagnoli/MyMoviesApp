@@ -1,5 +1,6 @@
 package com.example.mymoviesapp.data.injection
 
+import com.example.mymoviesapp.data.core.BaseRequestSender
 import com.example.mymoviesapp.domain.movie.repository.MovieRepository
 import com.example.mymoviesapp.data.response.movie.repository.MovieRepositoryImpl
 import com.example.mymoviesapp.data.core.MovieApi
@@ -19,19 +20,19 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideMovieRepository(movieApi: MovieApi): MovieRepository {
-        return MovieRepositoryImpl(movieApi)
+    fun provideMovieRepository(movieApi: MovieApi, baseRequestSender: BaseRequestSender): MovieRepository {
+        return MovieRepositoryImpl(movieApi, baseRequestSender)
     }
 
     @Singleton
     @Provides
-    fun provideGenreRepository(movieApi: MovieApi): GenreRepository {
-        return GenreRepositoryImpl(movieApi)
+    fun provideGenreRepository(movieApi: MovieApi, baseRequestSender: BaseRequestSender): GenreRepository {
+        return GenreRepositoryImpl(movieApi, baseRequestSender)
     }
 
     @Singleton
     @Provides
-    fun provideCreditRepository(movieApi: MovieApi): CreditRepository {
-        return CreditRepositoryImpl(movieApi)
+    fun provideCreditRepository(movieApi: MovieApi, baseRequestSender: BaseRequestSender): CreditRepository {
+        return CreditRepositoryImpl(movieApi, baseRequestSender)
     }
 }

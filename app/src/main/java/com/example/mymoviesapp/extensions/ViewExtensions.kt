@@ -11,3 +11,11 @@ fun ImageView.loadImage(view: View?, url: String?) {
             .into(this)
     }
 }
+
+fun View.hide() {
+    this.visibility = View.GONE
+}
+
+fun View.show() {
+    this.visibility = View.VISIBLE
+}

@@ -1,5 +1,6 @@
 package com.example.mymoviesapp.data.response.genre.repository
 
+import com.example.mymoviesapp.data.core.BaseRequestSender
 import com.example.mymoviesapp.data.core.MovieApi
 import com.example.mymoviesapp.domain.genre.entity.Genre
 import com.example.mymoviesapp.domain.genre.entity.GenresList
@@ -11,23 +12,10 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class GenreRepositoryImpl @Inject constructor(
-    private val movieApi: MovieApi
+    private val movieApi: MovieApi,
+    private val baseRequestSender: BaseRequestSender
 ) : GenreRepository {
-    override fun getGenres(callback: (List<Genre>) -> Unit) {
-        CoroutineScope(GlobalScope.coroutineContext).launch(Dispatchers.Main) {
-            withContext(Dispatchers.IO) {
-                val callApi = movieApi.getGenres()
-                callApi.enqueue(object : Callback<GenresList> {
-                    override fun onResponse(
-                        call: Call<GenresList>,
-                        response: Response<GenresList>
-                    ) {
-                        callback(response.body()?.genres ?: mutableListOf())
-                    }
-                    override fun onFailure(call: Call<GenresList>, t: Throwable) {
-                    }
-                })
-            }
-        }
+    override fun getGenres(callback: (GenresList?) -> Unit) {
+        baseRequestSender.getResult(movieApi.getGenres(), callback)
     }
 }

@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mymoviesapp.base.BottomSheetEvents
 import com.example.mymoviesapp.databinding.ActivityMovieListBinding
 import com.example.mymoviesapp.domain.movie.entity.Movie
+import com.example.mymoviesapp.extensions.handleState
+import com.example.mymoviesapp.extensions.hide
+import com.example.mymoviesapp.extensions.show
+import com.example.mymoviesapp.extensions.showErrorModal
 import com.example.mymoviesapp.features.details.DetailsActivity
 import com.example.mymoviesapp.features.details.DetailsActivity.Companion.MOVIE
 import com.example.mymoviesapp.features.filter.FilterBottomSheetFragment
@@ -20,7 +24,7 @@ class MovieListActivity : AppCompatActivity(), BottomSheetEvents {
     private lateinit var binding: ActivityMovieListBinding
     private val movieListViewModel: MovieViewModel by viewModels()
 
-    private val popularMoviesAdapter by lazy { MoviesAdapter(::goToDetailsPage) }
+    private val popularMoviesAdapter by lazy { MoviesPosterAdapter(::goToDetailsPage) }
     private val upcomingMoviesAdapter by lazy { MoviesPosterAdapter(::goToDetailsPage) }
     private val topRatedMoviesAdapter by lazy { MoviesPosterAdapter(::goToDetailsPage) }
 
@@ -31,6 +35,10 @@ class MovieListActivity : AppCompatActivity(), BottomSheetEvents {
         setupAdapters()
         setupObservers()
         setupListeners()
+        requestMovies()
+    }
+
+    private fun requestMovies() {
         movieListViewModel.getMovieData()
     }
 
@@ -48,7 +56,11 @@ class MovieListActivity : AppCompatActivity(), BottomSheetEvents {
     }
 
     private fun setupAdapters() {
-        binding.popularMovieRecyclerView.adapter = popularMoviesAdapter
+        binding.popularMovieRecyclerView.apply {
+            adapter = popularMoviesAdapter
+            layoutManager =
+                LinearLayoutManager(this@MovieListActivity, LinearLayoutManager.HORIZONTAL, false);
+        }
         binding.upcomingMovieRecyclerView.apply {
             adapter = upcomingMoviesAdapter
             layoutManager =
@@ -70,6 +82,13 @@ class MovieListActivity : AppCompatActivity(), BottomSheetEvents {
         })
         movieListViewModel.getUpcomingMovies().observe(this, {
             upcomingMoviesAdapter.addMovies(it)
+        })
+        movieListViewModel.getViewState().observe(this, { state ->
+            state?.handleState(
+                loading = { binding.progressCardView.show() },
+                stopLoading = { binding.progressCardView.hide() },
+                error = { showErrorModal(it) { _, _ -> requestMovies() } }
+            )
         })
     }
 

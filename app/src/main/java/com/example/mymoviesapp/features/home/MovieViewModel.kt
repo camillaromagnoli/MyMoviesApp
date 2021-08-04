@@ -6,10 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mymoviesapp.domain.movie.entity.Movie
 import com.example.mymoviesapp.domain.movie.repository.MovieRepository
+import com.example.mymoviesapp.domain.state.State
+import com.example.mymoviesapp.extensions.postError
+import com.example.mymoviesapp.extensions.postLoading
+import com.example.mymoviesapp.extensions.postSuccess
+import java.lang.Exception
 
 class MovieViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
+    private val state = MutableLiveData<State<Unit>>()
+    fun getViewState(): LiveData<State<Unit>> = state
+
     private val popularMovies = MutableLiveData<List<Movie>>()
     fun getPopularMovies(): LiveData<List<Movie>> = popularMovies
 
@@ -24,17 +32,25 @@ class MovieViewModel @ViewModelInject constructor(
     private val allPopularMovies = mutableListOf<Movie>()
 
     fun getMovieData() {
-        movieRepository.getPopularMovies {
-            allPopularMovies.addAll(it)
-            popularMovies.postValue(allPopularMovies)
-        }
-        movieRepository.getTopRatedMovies {
-            allTopRatedMovies.addAll(it)
-            topRatedMovies.postValue(allTopRatedMovies)
-        }
-        movieRepository.getUpcomingMovies {
-            allUpcomingMovies.addAll(it)
-            upcomingMovies.postValue(allUpcomingMovies)
+        try {
+            state.postLoading()
+            movieRepository.getPopularMovies {
+                state.postSuccess()
+                allPopularMovies.addAll(it?.results.orEmpty())
+                popularMovies.postValue(allPopularMovies)
+            }
+            movieRepository.getTopRatedMovies {
+                state.postSuccess()
+                allTopRatedMovies.addAll(it?.results.orEmpty())
+                topRatedMovies.postValue(allTopRatedMovies)
+            }
+            movieRepository.getUpcomingMovies {
+                state.postSuccess()
+                allUpcomingMovies.addAll(it?.results.orEmpty())
+                upcomingMovies.postValue(allUpcomingMovies)
+            }
+        } catch (e: Exception) {
+            state.postError(e)
         }
     }
 

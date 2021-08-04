@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.mymoviesapp.base.BaseBottomSheetFragment
 import com.example.mymoviesapp.databinding.FragmentBottomSheetFilterBinding
+import com.example.mymoviesapp.extensions.handleState
+import com.example.mymoviesapp.extensions.hide
+import com.example.mymoviesapp.extensions.show
+import com.example.mymoviesapp.extensions.showErrorModal
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,7 +19,7 @@ class FilterBottomSheetFragment : BaseBottomSheetFragment() {
 
     private val genreViewModel: GenreViewModel by viewModels()
 
-    private val adapterGenres by lazy { GenresAdapter(::selectGenre) }
+    private val genresAdapter by lazy { GenresAdapter(::selectGenre) }
 
 
     override fun onCreateView(
@@ -27,8 +31,12 @@ class FilterBottomSheetFragment : BaseBottomSheetFragment() {
         setupObservers()
         setupAdapter()
         setupListeners()
-        genreViewModel.getGenresData()
+        requestGenres()
         return binding.root
+    }
+
+    private fun requestGenres() {
+        genreViewModel.getGenresData()
     }
 
     private fun setupListeners() {
@@ -38,12 +46,17 @@ class FilterBottomSheetFragment : BaseBottomSheetFragment() {
     }
 
     private fun setupAdapter() {
-        binding.genreRecyclerView.adapter = adapterGenres
+        binding.genreRecyclerView.adapter = genresAdapter
     }
 
     private fun setupObservers() {
-        genreViewModel.getGenres().observe(this, {
-            adapterGenres.addGenres(it)
+        genreViewModel.getGenresState().observe(this, { state ->
+            state?.handleState(
+                loading = { binding.progressCardView.show() },
+                stopLoading = { binding.progressCardView.hide() },
+                success = { genresAdapter.addGenres(it) },
+                error = { showErrorModal(it) { _, _ -> requestGenres() } }
+            )
         })
     }
 

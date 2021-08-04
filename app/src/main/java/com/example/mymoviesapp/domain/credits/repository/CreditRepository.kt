@@ -1,7 +1,9 @@
 package com.example.mymoviesapp.domain.credits.repository
 
-import com.example.mymoviesapp.domain.credits.entity.Cast
+import com.example.mymoviesapp.domain.credits.entity.CreditList
+import com.example.mymoviesapp.domain.exception.BaseException
 
 interface CreditRepository {
-    fun getCredits(movieId: Int, callback: (List<Cast>) -> Unit)
+    @Throws(BaseException::class)
+    fun getCredits(movieId: Int, callback: (CreditList?) -> Unit)
 }
