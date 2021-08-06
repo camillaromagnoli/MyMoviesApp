@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
@@ -20,7 +20,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/backdropImageView"
+                android:id="@+id/backdrop_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:scaleType="fitXY"
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/returnImageButton"
+                        android:id="@+id/return_image_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_small"
@@ -54,7 +54,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
-        android:id="@+id/contentInfoInclude"
+        android:id="@+id/content_info_include"
         layout="@layout/layout_content_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

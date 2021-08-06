@@ -22,7 +22,7 @@ class GenreViewModel @ViewModelInject constructor(
     fun getGenresState(): LiveData<State<List<Genre>>> = state
 
     init {
-        getGenresState()
+        getGenresData()
     }
 
     fun getGenresData() {

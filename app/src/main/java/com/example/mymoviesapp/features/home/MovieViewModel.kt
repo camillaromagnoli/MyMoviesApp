@@ -5,10 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mymoviesapp.data.response.movie.local.database.MovieEntity
+import com.example.mymoviesapp.data.response.movie.local.database.MovieEntity.Companion.POPULAR
+import com.example.mymoviesapp.data.response.movie.local.database.MovieEntity.Companion.TOP_RATED
+import com.example.mymoviesapp.data.response.movie.local.database.MovieEntity.Companion.UPCOMING
 import com.example.mymoviesapp.domain.movie.entity.Movie
-import com.example.mymoviesapp.domain.movie.entity.Movie.Companion.POPULAR
-import com.example.mymoviesapp.domain.movie.entity.Movie.Companion.TOP_RATED
-import com.example.mymoviesapp.domain.movie.entity.Movie.Companion.UPCOMING
 import com.example.mymoviesapp.domain.movie.repository.MovieRepository
 import com.example.mymoviesapp.domain.state.State
 import com.example.mymoviesapp.extensions.postError
@@ -17,7 +18,6 @@ import com.example.mymoviesapp.extensions.postSuccess
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class MovieViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository
@@ -70,9 +70,12 @@ class MovieViewModel @ViewModelInject constructor(
                     state.postError(e)
                 } else {
                     state.postSuccess()
-                    allPopularMovies.addAll(localMovies.filter { it.category == POPULAR })
-                    allUpcomingMovies.addAll(localMovies.filter { it.category == UPCOMING })
-                    allTopRatedMovies.addAll(localMovies.filter { it.category == TOP_RATED })
+                    allPopularMovies.addAll(localMovies.filter { it.category == POPULAR }
+                        .map { it.toDomain() })
+                    allUpcomingMovies.addAll(localMovies.filter { it.category == UPCOMING }
+                        .map { it.toDomain() })
+                    allTopRatedMovies.addAll(localMovies.filter { it.category == TOP_RATED }
+                        .map { it.toDomain() })
                     notifyMoviesLiveData()
                 }
             }
@@ -86,16 +89,16 @@ class MovieViewModel @ViewModelInject constructor(
     }
 
     private suspend fun saveLocalMovies() {
-        val popularMovies = allPopularMovies
-        popularMovies.forEach { it.category = POPULAR }
+        val popularMovies =
+            allPopularMovies.map { MovieEntity().toEntity(it).withCategory(POPULAR) }
 
-        val upcomingMovies = allUpcomingMovies
-        upcomingMovies.forEach { it.category = UPCOMING }
+        val upcomingMovies =
+            allUpcomingMovies.map { MovieEntity().toEntity(it).withCategory(UPCOMING) }
 
-        val topRatedMovies = allTopRatedMovies
-        topRatedMovies.forEach { it.category = TOP_RATED }
+        val topRatedMovies =
+            allTopRatedMovies.map { MovieEntity().toEntity(it).withCategory(TOP_RATED) }
 
-        val allMovies = mutableListOf<Movie>()
+        val allMovies = mutableListOf<MovieEntity>()
         allMovies.addAll(popularMovies)
         allMovies.addAll(topRatedMovies)
         allMovies.addAll(upcomingMovies)

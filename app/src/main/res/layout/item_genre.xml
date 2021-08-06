@@ -20,7 +20,7 @@
             android:padding="@dimen/padding_xsmall">
 
             <TextView
-                android:id="@+id/genreTextView"
+                android:id="@+id/genre_text_view"
                 style="@style/TextAppearance.Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
