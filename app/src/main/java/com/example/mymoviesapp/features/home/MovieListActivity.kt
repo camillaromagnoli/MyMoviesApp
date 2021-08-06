@@ -35,7 +35,6 @@ class MovieListActivity : AppCompatActivity(), BottomSheetEvents {
         setupAdapters()
         setupObservers()
         setupListeners()
-        requestMovies()
     }
 
     private fun requestMovies() {
@@ -87,7 +86,7 @@ class MovieListActivity : AppCompatActivity(), BottomSheetEvents {
             state?.handleState(
                 loading = { binding.progressCardView.show() },
                 stopLoading = { binding.progressCardView.hide() },
-                error = { showErrorModal(it) { _, _ -> requestMovies() } }
+                error = { showErrorModal(it) { requestMovies() } }
             )
         })
     }
@@ -99,11 +98,12 @@ class MovieListActivity : AppCompatActivity(), BottomSheetEvents {
         startActivity(intent)
     }
 
-    override fun onBottomSheetClose(args: Map<String, Any>) {
-        args[ID]?.let {
-            movieListViewModel.filterByGenre(it as Int)
+    override fun onBottomSheetClose(arguments: Map<String, Any>) {
+        arguments[ID]?.let { id ->
+            movieListViewModel.filterByGenre(id as Int)
         } ?: run {
             movieListViewModel.resetFilters()
         }
     }
+
 }

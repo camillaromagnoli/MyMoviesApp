@@ -16,8 +16,8 @@ abstract class BaseBottomSheetFragment : BottomSheetDialogFragment() {
         listener = null
     }
 
-    protected fun dismissWithArguments(args: Map<String, Any>) {
-        listener?.onBottomSheetClose(args)
+    protected fun dismissWithArguments(arguments: Map<String, Any>) {
+        listener?.onBottomSheetClose(arguments)
         dismiss()
     }
 }

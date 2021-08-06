@@ -42,7 +42,7 @@ class DetailsActivity : AppCompatActivity() {
                 loading = { binding.progress.show() },
                 stopLoading = { binding.progress.hide() },
                 success = { castAdapter.addCast(it) },
-                error = { showErrorModal(it) { _, _ -> requestCredits() } }
+                error = { showErrorModal(it) { requestCredits() } }
             )
         })
     }
@@ -75,7 +75,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun requestCredits() {
-        detailsViewModel.getCredits(detailsViewModel.movie?.id)
+        detailsViewModel.getCredits()
     }
 
     companion object {

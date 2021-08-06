@@ -2,23 +2,32 @@ package com.example.mymoviesapp.data.response.movie.repository
 
 import com.example.mymoviesapp.data.core.BaseRequestSender
 import com.example.mymoviesapp.data.core.MovieApi
-import com.example.mymoviesapp.domain.movie.entity.MovieList
+import com.example.mymoviesapp.data.response.movie.local.MovieLocalDataSource
+import com.example.mymoviesapp.domain.movie.entity.Movie
 import com.example.mymoviesapp.domain.movie.repository.MovieRepository
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val movieApi: MovieApi,
-    private val baseRequestSender: BaseRequestSender
+    private val baseRequestSender: BaseRequestSender,
+    private val movieLocalDataSource: MovieLocalDataSource
 ) : MovieRepository {
-    override fun getPopularMovies(callback: (MovieList?) -> Unit) {
-        baseRequestSender.getResult(movieApi.getPopularMovies(), callback)
-    }
+    override suspend fun getPopularMovies() =
+        baseRequestSender.getResult { movieApi.getPopularMovies() }
 
-    override fun getTopRatedMovies(callback: (MovieList?) -> Unit) {
-        baseRequestSender.getResult(movieApi.getTopRatedMovies(), callback)
-    }
 
-    override fun getUpcomingMovies(callback: (MovieList?) -> Unit) {
-        baseRequestSender.getResult(movieApi.getUpcomingMovies(), callback)
+    override suspend fun getTopRatedMovies() =
+        baseRequestSender.getResult { movieApi.getTopRatedMovies() }
+
+
+    override suspend fun getUpcomingMovies() =
+        baseRequestSender.getResult { movieApi.getUpcomingMovies() }
+
+
+    override suspend fun getLocalMovies() =
+        movieLocalDataSource.retrieveMovies()
+
+    override suspend fun saveMovies(list: List<Movie>) {
+        movieLocalDataSource.insertMovies(list)
     }
 }

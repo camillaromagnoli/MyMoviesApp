@@ -31,7 +31,6 @@ class FilterBottomSheetFragment : BaseBottomSheetFragment() {
         setupObservers()
         setupAdapter()
         setupListeners()
-        requestGenres()
         return binding.root
     }
 
@@ -55,7 +54,7 @@ class FilterBottomSheetFragment : BaseBottomSheetFragment() {
                 loading = { binding.progressCardView.show() },
                 stopLoading = { binding.progressCardView.hide() },
                 success = { genresAdapter.addGenres(it) },
-                error = { showErrorModal(it) { _, _ -> requestGenres() } }
+                error = { showErrorModal(it) { requestGenres() } }
             )
         })
     }

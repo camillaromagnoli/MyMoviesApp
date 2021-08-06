@@ -1,7 +1,6 @@
 package com.example.mymoviesapp.extensions
 
 import android.app.Activity
-import android.content.DialogInterface
 import androidx.fragment.app.Fragment
 import com.example.mymoviesapp.R
 import com.example.mymoviesapp.domain.exception.ClientException
@@ -11,7 +10,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 fun Activity.showErrorModal(
     throwable: Throwable?,
-    action: DialogInterface.OnClickListener?
+    action: () -> Unit
 ) {
     val message = when (throwable) {
         is NetworkException -> getString(R.string.network_error)
@@ -21,14 +20,14 @@ fun Activity.showErrorModal(
     val dialog = MaterialAlertDialogBuilder(this)
         .setTitle(getString(R.string.something_went_wrong))
         .setMessage(message)
-        .setPositiveButton(getString(R.string.try_again), action)
+        .setPositiveButton(getString(R.string.try_again)) { _, _ -> action.invoke() }
         .setNeutralButton(getString(R.string.ok), null)
     dialog.show()
 }
 
 fun Fragment.showErrorModal(
     throwable: Throwable?,
-    action: DialogInterface.OnClickListener?
+    action: () -> Unit
 ) {
     val message = when (throwable) {
         is NetworkException -> getString(R.string.network_error)
@@ -38,7 +37,7 @@ fun Fragment.showErrorModal(
     val dialog = MaterialAlertDialogBuilder(requireContext())
         .setTitle(getString(R.string.something_went_wrong))
         .setMessage(message)
-        .setPositiveButton(getString(R.string.try_again), action)
+        .setPositiveButton(getString(R.string.try_again)) { _, _ -> action.invoke() }
         .setNeutralButton(getString(R.string.ok), null)
     dialog.show()
 }

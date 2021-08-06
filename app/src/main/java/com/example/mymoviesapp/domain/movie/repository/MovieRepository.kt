@@ -1,15 +1,16 @@
 package com.example.mymoviesapp.domain.movie.repository
 
-import com.example.mymoviesapp.domain.exception.BaseException
+import com.example.mymoviesapp.domain.movie.entity.Movie
 import com.example.mymoviesapp.domain.movie.entity.MovieList
 
 interface MovieRepository {
-    @Throws(BaseException::class)
-    fun getPopularMovies(callback: (MovieList?) -> Unit)
+    suspend fun getPopularMovies(): MovieList?
 
-    @Throws(BaseException::class)
-    fun getTopRatedMovies(callback: (MovieList?) -> Unit)
+    suspend fun getTopRatedMovies(): MovieList?
 
-    @Throws(BaseException::class)
-    fun getUpcomingMovies(callback: (MovieList?) -> Unit)
+    suspend fun getUpcomingMovies(): MovieList?
+
+    suspend fun getLocalMovies(): List<Movie>
+
+    suspend fun saveMovies(list: List<Movie>)
 }
